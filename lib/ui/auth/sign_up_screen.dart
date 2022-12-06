@@ -469,7 +469,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             onPressed: () {
               // Validate returns true if the form is valid, or false otherwise.
               if (_formKey.currentState!.validate()) {
-                if (agree) {
+                if (registrationController.agreeCondition.isTrue) {
                   /// do sign up
                 }
               }

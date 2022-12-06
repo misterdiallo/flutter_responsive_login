@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:responsive_login/constants/app_colors.dart';
 
@@ -16,7 +17,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController nameController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -25,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
-    nameController.dispose();
+    usernameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
@@ -173,6 +174,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     /// username or Gmail
                     TextFormField(
+                      textCapitalization: TextCapitalization.none,
+                      keyboardType: TextInputType.name,
+                      autocorrect: false,
+                      autofocus: true,
+                      textInputAction: TextInputAction.next,
                       style: kTextFormFieldStyle(),
                       decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.person),
@@ -181,18 +187,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: BorderRadius.all(Radius.circular(15)),
                         ),
                       ),
-                      controller: nameController,
+                      controller: usernameController,
                       // The validator receives the text that the user has entered.
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Entrez votre identifiant';
-                        } else if (value.length < 4) {
-                          return 'Identifiant invalide';
-                        } else if (value.length > 20) {
-                          return 'Identifiant incorrect';
-                        }
-                        return null;
-                      },
+                      validator: MultiValidator([
+                        RequiredValidator(
+                            errorText: 'Entrez votre identifiant'),
+                      ]),
                     ),
 
                     SizedBox(
@@ -202,6 +202,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     /// password
                     Obx(
                       () => TextFormField(
+                        textCapitalization: TextCapitalization.none,
+                        keyboardType: TextInputType.visiblePassword,
+                        autocorrect: false,
+                        textInputAction: TextInputAction.done,
                         style: kTextFormFieldStyle(),
                         controller: passwordController,
                         obscureText: loginController.isObscure.value,
@@ -223,16 +227,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         // The validator receives the text that the user has entered.
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Entrez votre mot de passe';
-                          } else if (value.length < 6) {
-                            return 'Mot de passe invalide';
-                          } else if (value.length > 20) {
-                            return 'Mot de passe incorrecte';
-                          }
-                          return null;
-                        },
+                        validator: MultiValidator([
+                          RequiredValidator(
+                              errorText: 'Entrez votre mot de passe'),
+                          MinLengthValidator(4,
+                              errorText: 'Minimum 6 caracteres'),
+                          PatternValidator(
+                              r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$',
+                              errorText: 'Mot de passe incorrect'),
+                        ]),
                       ),
                     ),
 
@@ -249,7 +252,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     /// Navigate To Login Screen
                     GestureDetector(
                       onTap: () {
-                        nameController.clear();
+                        usernameController.clear();
                         emailController.clear();
                         passwordController.clear();
                         _formKey.currentState?.reset();
@@ -263,7 +266,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: kHaveAnAccountStyle(size),
                           children: [
                             TextSpan(
-                              text: " Inscrivez-vous gratuitement",
+                              text: " \nInscrivez-vous gratuitement",
                               style: kLoginOrSignUpTextStyle(
                                 size,
                               ),
