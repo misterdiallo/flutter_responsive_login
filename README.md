@@ -1,16 +1,26 @@
-# responsive_login
+# Flutter Responsive Login/Registration With Backend
 
-A new Flutter project.
+A Fully responsive and multiplatform Dashboard using flutter.
 
-## Getting Started
+###### Packages
 
-This project is a starting point for a Flutter application.
+`percent_indicator` for Circular and Linear percent indicators
+`get` for routing and managing responsive layouts.
+`get_it`: ^7.2.0
+`http`: ^0.13.5
+`get_storage`: ^2.0.3
+`google_fonts`: ^3.0.1
+`lottie`: ^2.0.0
+`logging`: ^1.1.0
+`form_field_validator`: ^1.1.0
 
-A few resources to get you started if this is your first Flutter project:
+###### How to clone and try it
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. `git clone https://github.com/misterdiallo/flutter_responsive_dashboard.git`
+2. nagivate to the project folder
+3. `flutter pub get`
+4. `flutter run -d chrome`
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Demonstration Video
+
+`Coming soon`
